@@ -1,0 +1,12 @@
+07/09/2022 : 
+- accès code pour chaque session : github ? (live share)
+- backend => serveur node js ?
+- function expression: convention de nommage (vs function declaration)
+- fonctionnement class sans nom
+- Dashboard.js > class sans nom > constructor : ne crée pas que des propriétés stockées ? pq variables non stockée ? pq nvl objet non stocké ?
+- pas d'EventListener : utilisation de la méthode 'click' similaire ?
+- Dashboard.js : this.counter pas dans constructor => que représente 'this' à ce moment ?
+
+15/09/2022 : 
+- https://wdi.centralesupelec.fr/appliouaibe/Cours/JSObjet : 'notion de prototype'
+- Dashboard.js > line 157 : utilité (ne change rien si on commente)? 
