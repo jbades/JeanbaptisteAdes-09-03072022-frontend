@@ -12,9 +12,10 @@ import { ROUTES, ROUTES_PATH } from "../constants/routes.js"
 export default () => {
   const rootDiv = document.getElementById('root')
   rootDiv.innerHTML = ROUTES({ pathname: window.location.pathname })
+  // console.log(window.location.pathname);
 
   window.onNavigate = (pathname) => {
-
+  
     window.history.pushState(
       {},
       pathname,

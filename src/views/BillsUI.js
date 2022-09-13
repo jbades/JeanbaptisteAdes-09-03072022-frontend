@@ -1,7 +1,6 @@
 import VerticalLayout from './VerticalLayout.js'
 import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
-
 import Actions from './Actions.js'
 
 const row = (bill) => {
@@ -16,10 +15,11 @@ const row = (bill) => {
         ${Actions(bill.fileUrl)}
       </td>
     </tr>
-    `)
-  }
+  `)
+}
 
 const rows = (data) => {
+  data = data.sort((a,b) => {return a.date > b.date ? -1 : a.date < b.date ? 1 : 0});
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 

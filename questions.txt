@@ -10,3 +10,5 @@
 15/09/2022 : 
 - https://wdi.centralesupelec.fr/appliouaibe/Cours/JSObjet : 'notion de prototype'
 - Dashboard.js > line 157 : utilité (ne change rien si on commente)? 
+- Bills.js > line 32 : méthode 'getBills' : après 'return', on peut continuer des instructions ?
+- Router.js > line 17 : window.onNavigate => interprêté automatiquement ou bien méthode ? 
