@@ -29,10 +29,9 @@ export default class {
 
   getBills = () => {
     if (this.store) {
-      // console.log(this.store);
       return this.store
-      .bills()
-      .list()
+      .bills() // Creates Bills API
+      .list() // Calls bills data from Node server
       .then(snapshot => {
         const bills = snapshot
           .map(doc => {

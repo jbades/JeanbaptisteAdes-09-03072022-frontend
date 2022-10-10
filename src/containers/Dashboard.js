@@ -21,6 +21,7 @@ export const filteredBills = (data, status) => {
         selectCondition =
           (bill.status === status) &&
           ![...USERS_TEST, userEmail].includes(bill.email)
+        console.log(selectCondition);
       }
 
       return selectCondition

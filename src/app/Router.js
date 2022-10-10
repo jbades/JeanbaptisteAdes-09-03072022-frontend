@@ -11,8 +11,8 @@ import { ROUTES, ROUTES_PATH } from "../constants/routes.js"
 
 export default () => {
   const rootDiv = document.getElementById('root')
+  // Sets pathname to '/' for 'root' div
   rootDiv.innerHTML = ROUTES({ pathname: window.location.pathname })
-  // console.log(window.location.pathname);
 
   window.onNavigate = (pathname) => {
   
@@ -32,6 +32,7 @@ export default () => {
       divIcon1.classList.add('active-icon')
       divIcon2.classList.remove('active-icon')
       const bills = new Bills({ document, onNavigate, store, localStorage  })
+      console.log("!!!bills:", bills, "!!!store:", store)
       bills.getBills().then(data => {
         rootDiv.innerHTML = BillsUI({ data })
         const divIcon1 = document.getElementById('layout-icon1')

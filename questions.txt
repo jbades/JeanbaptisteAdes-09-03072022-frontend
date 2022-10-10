@@ -12,3 +12,14 @@
 - Dashboard.js > line 157 : utilité (ne change rien si on commente)? 
 - Bills.js > line 32 : méthode 'getBills' : après 'return', on peut continuer des instructions ?
 - Router.js > line 17 : window.onNavigate => interprêté automatiquement ou bien méthode ? 
+
+22/09/2022 : 
+- questions du 15/09
+- /** @param @returns...*/ => documentation fonction ?
+
+05/10/2022 : 
+- __tests__/Actions.js : on manipule un DOM théorique (document.body.innerHTML) et après on l'invoque via DOM Testing-Libray (via 'screen') ? 
+- test/Dashboard.js (line 16): jest.mock => comment tester (console.log ?)
+- test/Dashboard.js (line 9): import de 'Dashboard' = alias pour default ? D'où l'import des méthodes suivantes ?
+- container/Dashboard.js (line18) : commentaire '/* istanbul ignore next */' ?
+- test/Dashboard.js (line 39) : DashboardUI({ loading: true } => comment fonctionne les paramètres de DashboardUI(data, loading, error) ?
