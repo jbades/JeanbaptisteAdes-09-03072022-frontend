@@ -14,6 +14,12 @@ export default () => {
   // Sets pathname to '/' for 'root' div
   rootDiv.innerHTML = ROUTES({ pathname: window.location.pathname })
 
+    /**
+   * Creates a new SourceMapGenerator based on a SourceMapConsumer
+   *
+   * @param pathname is a string
+   * @return function
+   */
   window.onNavigate = (pathname) => {
   
     window.history.pushState(
@@ -31,8 +37,8 @@ export default () => {
       const divIcon2 = document.getElementById('layout-icon2')
       divIcon1.classList.add('active-icon')
       divIcon2.classList.remove('active-icon')
-      const bills = new Bills({ document, onNavigate, store, localStorage  })
-      console.log("!!!bills:", bills, "!!!store:", store)
+      const bills = new Bills({ document, onNavigate, store, localStorage })
+      // console.log("type of:", typeof store, "value:", store)
       bills.getBills().then(data => {
         rootDiv.innerHTML = BillsUI({ data })
         const divIcon1 = document.getElementById('layout-icon1')
@@ -46,6 +52,7 @@ export default () => {
     } else if (pathname === ROUTES_PATH['NewBill']) {
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
       new NewBill({ document, onNavigate, store, localStorage })
+      console.log("!!!document:", document, "!!!onNavigate:", onNavigate, "!!!store:", store, "!!!localStorage:", localStorage)
       const divIcon1 = document.getElementById('layout-icon1')
       const divIcon2 = document.getElementById('layout-icon2')
       divIcon1.classList.remove('active-icon')

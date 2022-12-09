@@ -86,8 +86,22 @@ const mockedBills = {
 
 export default {
   bills() {
+    console.log("!!!!! Mocked bills available !")
     return mockedBills
     //return {}
   },
 }
 
+// // Testing
+// export default class {
+//   constructor({ document, onNavigate, store, localStorage }) {
+//     this.document = document,
+//     this.onNavigate = onNavigate,
+//     this.store = store,
+//     this.localStorage = localStorage
+//   }
+
+//   bills() {
+//     return mockedBills
+//   }
+// }

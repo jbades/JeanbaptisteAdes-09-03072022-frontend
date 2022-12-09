@@ -23,3 +23,11 @@
 - test/Dashboard.js (line 9): import de 'Dashboard' = alias pour default ? D'où l'import des méthodes suivantes ?
 - container/Dashboard.js (line18) : commentaire '/* istanbul ignore next */' ?
 - test/Dashboard.js (line 39) : DashboardUI({ loading: true } => comment fonctionne les paramètres de DashboardUI(data, loading, error) ?
+
+21/10/2022 : 
+- Router.js : pq jsdoc sur window.onNavigate ne fonctionne pas ?
+- idem : pq la fonction onNavigate s'appelle-t-elle elle même ? Objectif de onNavigate : passer du code ? Redoncances : 12 lignes répétées
+- idem : quand on passe l'argument 'onNavigate', on ne met pas les paranthèses, donc ça ne déclenche pas la fonction ? ça ne passe que le code de la fonction ? Pourquoi ne passe-t-on pas l'argument 'pathname' de la fonction ? Fonctionne quand même ?
+
+08/10/2022 : 
+- NewBillUI.js : ajout data-testid='btn-send-bill'. Problème ? 

@@ -19,12 +19,11 @@ const row = (bill) => {
 }
 
 const rows = (data) => {
-  data = data.sort((a,b) => {return a.date > b.date ? -1 : a.date < b.date ? 1 : 0});
+  // data = data.sort((a,b) => {return a.date > b.date ? -1 : a.date < b.date ? 1 : 0});
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => {
-  
   const modal = () => (`
     <div class="modal fade" id="modaleFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

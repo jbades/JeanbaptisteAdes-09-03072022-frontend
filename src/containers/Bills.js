@@ -3,7 +3,7 @@ import { formatDate, formatStatus } from "../app/format.js"
 import Logout from "./Logout.js"
 
 export default class {
-  constructor({ document, onNavigate, store, localStorage }) {
+  constructor({document, onNavigate, store, localStorage}) {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
@@ -33,8 +33,10 @@ export default class {
       .bills() // Creates Bills API
       .list() // Calls bills data from Node server
       .then(snapshot => {
+        // console.log(snapshot.length)
         const bills = snapshot
           .map(doc => {
+            // console.log(doc)
             try {
               return {
                 ...doc,
@@ -52,7 +54,7 @@ export default class {
               }
             }
           })
-          console.log('length', bills.length)
+          // console.log(bills)
         return bills
       })
     }

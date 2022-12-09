@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+* @jest-environment jsdom
  */
 
 import {fireEvent, screen, waitFor} from "@testing-library/dom"
