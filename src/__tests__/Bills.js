@@ -22,6 +22,7 @@ describe("Given I'm connected as an employee", () => {
   }))
 
   const store = storeMock
+  
   const onNavigate = (pathname) => {
     document.body.innerHTML = ROUTES({ pathname })
   }
@@ -30,12 +31,14 @@ describe("Given I'm connected as an employee", () => {
     document, onNavigate, store, localStorage: window.localStorage
   })
 
-  describe("When getBills function runs & correctly formated data feeds the system", () => {
+  const billsList = bills.getBills()
 
-    test("Then bills date format should be string", () => {
-      const billsList = bills.getBills()
+  describe("When correctly-formated data feeds the system", () => {
+
+    test("Then bills date-format should be string", () => {
       billsList.then((snapshot) =>
       {
+        // console.log(snapshot)
         const count = 0
         snapshot.map(bill => {
           if (typeof bill.date === 'string') {
@@ -50,32 +53,36 @@ describe("Given I'm connected as an employee", () => {
 
   describe('Given I am on Bills page', () => {
 
-    document.body.innerHTML = BillsUI({ data: bills })
-    //Y'a un problème avec data: bills. Poser question.
-
     describe('When  I click on Newbill button', () => {
     
       test('Function handleClickNewBill should be called', () => {
   
-        const handleClickNewBill = jest.fn(bills.handleClickNewBill)
-        const button = screen.getByTestId('btn-new-bill')
-        if (button) {
-          button.addEventListener('click', handleClickNewBill)
-          userEvent.click(button)
-          expect(handleClickNewBill).toHaveBeenCalled()  
-        }
+        billsList.then((snapshot) => {
+          document.body.innerHTML = BillsUI({ data: snapshot })
+          // console.log(BillsUI({ data: snapshot }))
+          const handleClickNewBill = jest.fn(bills.handleClickNewBill)
+          const button = screen.getByTestId('btn-new-bill')
+          if (button) {
+            button.addEventListener('click', handleClickNewBill)
+            userEvent.click(button)
+            expect(handleClickNewBill).toHaveBeenCalled()  
+          }
+        })
       })
   
       test('Function handleClickIconEye should be called', () => {
   
-        const handleClickIconEye = jest.fn(bills.handleClickIconEye)
-        const iconEye = screen.getAllByTestId(`icon-eye`)
-        // NodeList {} vide. Pas de données chargées. Pb avec data: bill ?
-        if (iconEye) {
-          iconEye.addEventListener('click', handleClickIconEye)
-          userEvent.click(iconEye)
-          expect(handleClickIconEye).toHaveBeenCalled()  
-        }       
+        billsList.then((snapshot) => {
+          document.body.innerHTML = BillsUI({ data: snapshot })
+          // console.log(BillsUI({ data: snapshot }))
+          const handleClickIconEye = jest.fn(bills.handleClickIconEye)
+          const iconEye = screen.getAllByTestId(`icon-eye`)
+          if (iconEye) {
+            iconEye.addEventListener('click', handleClickIconEye)
+            userEvent.click(iconEye)
+            expect(handleClickIconEye).toHaveBeenCalled()  
+          }       
+        })
       })
     })
   })
