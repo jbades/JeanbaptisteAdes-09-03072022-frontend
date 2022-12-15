@@ -26,11 +26,32 @@ import storeMock, {list} from "../__mocks__/store"
 // })
 
 describe('Given I am connected as an employee and I am on NewBillUI page', () => {
-  describe('When  I click on submit button', () => {
+  describe('When  I click on ChangeFile button', () => {
   
-    document.body.innerHTML = NewBillUI()
-    console.log(NewBillUI())
+    document.body.innerHTML = NewBillUI() // mocks the NewBillUI interface
+    window.alert = () => {};  // provide an empty implementation for window.alert
 
+    test('The uploaded mocked file should be the only one uploaded', () => {
+
+      const file = new File(['test'], 'test.png', {type: 'image/png'}) // stocks a mocked .png file
+      const changeFileButton = screen.getByTestId('file')
+      if (changeFileButton) {
+        userEvent.upload(changeFileButton, file)
+      }
+      // tests the mocked file a properly been uploaded and stocked
+      expect(changeFileButton.files[0]).toStrictEqual(file)
+      expect(changeFileButton.files.item(0)).toStrictEqual(file)
+      expect(changeFileButton.files).toHaveLength(1)
+    })
+  })
+})
+
+describe('Given I am connected as an employee and I am on NewBillUI page', () => {
+  describe('When  I click on submit button', () => {
+
+    document.body.innerHTML = NewBillUI() // mocks the NewBillUI interface
+
+    // mocks onNavigate, localStorage & store to feed NewBill object
     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
     window.localStorage.setItem('user', JSON.stringify({
       type: 'Employee'
@@ -58,38 +79,3 @@ describe('Given I am connected as an employee and I am on NewBillUI page', () =>
     })
   })
 })
-
-// describe('Given I am connected as an employee and I am on NewBillUI page', () => {
-//   describe('When  I click on submit button', () => {
-  
-//     document.body.innerHTML = NewBillUI()
-//     console.log(NewBillUI())
-
-//     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-//     window.localStorage.setItem('user', JSON.stringify({
-//       type: 'Employee'
-//     }))
-
-//     const onNavigate = (pathname) => {
-//       document.body.innerHTML = ROUTES({ pathname })
-//     }
-
-//     const store = storeMock
-
-//     const newBills = new NewBill({
-//       document, onNavigate, store, localStorage: window.localStorage
-//     })
-
-//     describe('When  I click on changeFile button', () => {
-//       test('Function handleChangeFile should be called', () => {
-//         const changeFileButton = screen.getByTestId('form-new-bill')
-//         const handleChangeFile = jest.fn(newBills.handleChangeFile)
-//         if (changeFileButton) {
-//           submitButton.addEventListener('click', handleChangeFile)
-//           userEvent.click(changeFileButton)
-//           expect(handleChangeFile).toHaveBeenCalled()  
-//         }
-//       })
-//     })
-//   })
-// })
