@@ -48,61 +48,36 @@ describe("Given I'm connected as an employee", () => {
     })
   })
 
-  // describe("When I am on Bills Page", () => {
-  //   test("Then bills should be ordered from earliest to latest", () => {
-  //     document.body.innerHTML = BillsUI({ data: bills })
-  //     const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
-  //     const antiChrono = (a, b) => ((a < b) ? 1 : -1)
-  //     const datesSorted = [...dates].sort(antiChrono)
-  //     expect(dates).toEqual(datesSorted)
-  //   })
-  // })
-})
+  describe('Given I am on Bills page', () => {
 
-// describe('Given I am connected as an employee and I am on Bills page', () => {
-//   describe('When  I click on Newbill button', () => {
+    document.body.innerHTML = BillsUI({ data: bills })
+    //Y'a un problème avec data: bills. Poser question.
+
+    describe('When  I click on Newbill button', () => {
+    
+      test('Function handleClickNewBill should be called', () => {
   
-//     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-//     window.localStorage.setItem('user', JSON.stringify({
-//       type: 'Employee'
-//     }))
-
-//     const onNavigate = (pathname) => {
-//       document.body.innerHTML = ROUTES({ pathname })
-//     }
-
-//     const store = storeMock
-
-//     const bills = new Bills({
-//       document, onNavigate, store, localStorage: window.localStorage
-//     })
-
-//     test('Function handleClickNewBill should be called', () => {
-
-//       document.body.innerHTML = BillsUI({ data: bills })
-//       //Y'a un problème avec data: bills. Poser question.
-
-//       const handleClickNewBill = jest.fn(bills.handleClickNewBill)
-//       const button = screen.getByTestId('btn-new-bill')
-//       if (button) {
-//         button.addEventListener('click', handleClickNewBill)
-//         userEvent.click(button)
-//         expect(handleClickNewBill).toHaveBeenCalled()  
-//       }
-//     })
-
-//     test('Function handleClickIconEye should be called', () => {
-
-//       document.body.innerHTML = BillsUI({ data: bills })
-
-//       const handleClickIconEye = jest.fn(bills.handleClickIconEye)
-//       const iconEye = screen.getAllByTestId(`icon-eye`)
-//       // NodeList {} vide. Pas de données chargées. Pb avec data: bill ?
-//       if (iconEye) {
-//         iconEye.addEventListener('click', handleClickIconEye)
-//         userEvent.click(iconEye)
-//         expect(handleClickIconEye).toHaveBeenCalled()  
-//       }       
-//     })
-//   })
-// })
+        const handleClickNewBill = jest.fn(bills.handleClickNewBill)
+        const button = screen.getByTestId('btn-new-bill')
+        if (button) {
+          button.addEventListener('click', handleClickNewBill)
+          userEvent.click(button)
+          expect(handleClickNewBill).toHaveBeenCalled()  
+        }
+      })
+  
+      test('Function handleClickIconEye should be called', () => {
+  
+        const handleClickIconEye = jest.fn(bills.handleClickIconEye)
+        const iconEye = screen.getAllByTestId(`icon-eye`)
+        // NodeList {} vide. Pas de données chargées. Pb avec data: bill ?
+        if (iconEye) {
+          iconEye.addEventListener('click', handleClickIconEye)
+          userEvent.click(iconEye)
+          expect(handleClickIconEye).toHaveBeenCalled()  
+        }       
+      })
+    })
+  })
+  
+})
