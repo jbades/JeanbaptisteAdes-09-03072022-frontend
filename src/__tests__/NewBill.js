@@ -5,26 +5,12 @@
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
 
-import userEvent from '@testing-library/user-event'
 import {fireEvent, screen, waitFor} from "@testing-library/dom"
-import BillsUI from "../views/BillsUI.js"
-import Bills from "../containers/Bills";
+import userEvent from '@testing-library/user-event'
 import { ROUTES, ROUTES_PATH} from "../constants/routes.js";
-import { formatDate } from "../app/format.js"
-import router from "../app/Router.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
-import storeMock, {list} from "../__mocks__/store"
+import mockStore, {list} from "../__mocks__/store"
  
-// describe("Given I am connected as an employee", () => {
-//   describe("When I am on NewBill Page", () => {
-//     test("Then ...", () => {
-//       const html = NewBillUI()
-//       document.body.innerHTML = html
-//       //to-do write assertion
-//     })
-//   })
-// })
-
 describe('Given I am connected as an employee and I am on NewBillUI page', () => {
   describe('When  I click on ChangeFile button', () => {
   
@@ -61,7 +47,7 @@ describe('Given I am connected as an employee and I am on NewBillUI page', () =>
       document.body.innerHTML = ROUTES({ pathname })
     }
 
-    const store = storeMock
+    const store = mockStore
 
     const newBills = new NewBill({
       document, onNavigate, store, localStorage: window.localStorage
