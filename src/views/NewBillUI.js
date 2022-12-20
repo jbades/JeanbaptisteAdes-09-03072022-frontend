@@ -10,7 +10,8 @@ export default () => {
           <div class='content-title'> Envoyer une note de frais </div>
         </div>
         <div class="form-newbill-container content-inner">
-          <form data-testid="form-new-bill">
+          <!-- Added a POST method to the form for POST integration test -->
+          <form data-testid="form-new-bill" method="POST">
             <div class="row">
                 <div class="col-md-6">
                   <div class="col-half">

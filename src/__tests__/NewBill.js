@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event'
 import { ROUTES, ROUTES_PATH} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import mockStore, {list} from "../__mocks__/store"
+import router from "../app/Router.js";
  
 describe('Given I am connected as an employee and I am on NewBillUI page', () => {
   describe('When  I click on ChangeFile button', () => {
@@ -47,7 +48,7 @@ describe('Given I am connected as an employee and I am on NewBillUI page', () =>
       document.body.innerHTML = ROUTES({ pathname })
     }
 
-    const store = mockStore
+    const store = mockStore // puis-je appeler un store vide ? Pas d'utilité à appeler mockStore, si ?
 
     const newBills = new NewBill({
       document, onNavigate, store, localStorage: window.localStorage
@@ -61,6 +62,26 @@ describe('Given I am connected as an employee and I am on NewBillUI page', () =>
         submitButton.addEventListener('click', handleSubmit)
         userEvent.click(submitButton)
         expect(handleSubmit).toHaveBeenCalled()  
+      }
+    })
+  })
+})
+
+// test d'intégration POST
+describe("Given I am a user connected as Employee", () => {
+  describe("When I'm on NewBills", () => {
+
+    test("sends new bill with mock API POST", async () => {
+      document.body.innerHTML = NewBillUI() // mocks the NewBillUI interface
+      console.log(document.body.innerHTML)
+
+      // const submitButton = screen.getByTestId('btn-send-bill')
+      const submitButton = screen.getByTestId('form-new-bill')
+      const onSubmit = jest.fn()
+      if (submitButton) {
+        submitButton.addEventListener('click', onSubmit)
+        await waitFor(() => userEvent.click(submitButton))
+        expect(onSubmit).toHaveBeenCalled()  
       }
     })
   })
