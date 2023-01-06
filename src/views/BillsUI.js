@@ -19,9 +19,9 @@ const row = (bill) => {
 }
 
 const rows = (data) => {
-  // console.log(data)
+  console.log(data)
   // sorting bills ascendently
-  data = data.sort((a,b) => {return a.date > b.date ? -1 : a.date < b.date ? 1 : 0});
+  data = data.sort((a,b) => {return b.date - a.date});
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 
