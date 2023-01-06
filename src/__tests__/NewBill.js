@@ -73,7 +73,7 @@ describe("Given I am a user connected as Employee", () => {
 
     test("sends new bill with mock API POST", async () => {
       document.body.innerHTML = NewBillUI() // mocks the NewBillUI interface
-      console.log(document.body.innerHTML)
+      // console.log(document.body.innerHTML)
 
       // const submitButton = screen.getByTestId('btn-send-bill')
       const submitButton = screen.getByTestId('form-new-bill')

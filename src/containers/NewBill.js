@@ -30,6 +30,7 @@ export default class NewBill {
     formData.append('file', file)
     formData.append('email', email)
 
+    // setting file extension restrictions 
     let allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
     if (!allowedExtensions.exec(filePath))
     {

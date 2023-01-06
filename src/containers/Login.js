@@ -10,7 +10,7 @@ export default class Login {
     this.onNavigate = onNavigate
     this.PREVIOUS_LOCATION = PREVIOUS_LOCATION
     this.store = store
-    const formEmployee = this.document.querySelector(`form[data-testid="form-employee"]`)
+    const formEmployee = this.document.querySelector(`form[data-testid="form-employee"]`) // correct testId had to be specified
     formEmployee.addEventListener("submit", this.handleSubmitEmployee)
     const formAdmin = this.document.querySelector(`form[data-testid="form-admin"]`)
     formAdmin.addEventListener("submit", this.handleSubmitAdmin)
@@ -19,7 +19,7 @@ export default class Login {
     e.preventDefault()
     const user = {
       type: "Employee",
-      email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value,
+      email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value, // correct testId had to be specified
       password: e.target.querySelector(`input[data-testid="employee-password-input"]`).value,
       status: "connected"
     }

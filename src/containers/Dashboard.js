@@ -138,6 +138,7 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
+    // setting up counting on bills display issue
     // console.log("compteur début= ", this.counter);
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
