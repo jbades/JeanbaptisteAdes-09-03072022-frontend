@@ -88,7 +88,6 @@ const mockedBills = {
 
 export default {
   bills() {
-    console.log("!!!!! Mocked bills available !")
     return mockedBills
     //return {}
   },
