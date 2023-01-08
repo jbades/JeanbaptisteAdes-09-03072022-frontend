@@ -41,8 +41,11 @@ describe('Given I am connected as an employee and I am on NewBillUI page', () =>
     // mocks onNavigate, localStorage & store to feed NewBill object
     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
     window.localStorage.setItem('user', JSON.stringify({
-      type: 'Employee'
-    }))
+      type: 'Employee',
+      email: "employee@test.tld",
+      password: "employee",
+      status: "connected",
+   }))
 
     const onNavigate = (pathname) => {
       document.body.innerHTML = ROUTES({ pathname })
@@ -54,12 +57,39 @@ describe('Given I am connected as an employee and I am on NewBillUI page', () =>
       document, onNavigate, store, localStorage: window.localStorage
     })
 
-    test('Function handleSubmit should be called', () => {
+    // test("Then form should be submited", async () => {
+    //   let updateMock = jest.spyOn(mockStore.bills(), 'update');
+    //   const handleSubmit = jest.fn((e) => newBills.handleSubmit(e));
+    //   const submit = screen.getByTestId('form-new-bill');
+    //   submit.addEventListener('submit', handleSubmit);
+    //   const name = screen.getByTestId('expense-name');
+    //   const amount = screen.getByTestId('amount');
+    //   const datePicker = screen.getByTestId('datepicker');
+    //   const pct = screen.getByTestId('pct');
+    //   const nameValue = 'new bill test';
+    //   const amountValue = '256';
+    //   const dateValue = '2020-05-12';
+    //   const pctValue = '20';
+    //   userEvent.type(name, nameValue);
+    //   userEvent.type(amount, amountValue);
+    //   userEvent.type(datePicker, dateValue);
+    //   userEvent.type(pct, pctValue);
+    //   datePicker.value = dateValue;
+    //   expect(datePicker.value).toBe(dateValue);
+    //   userEvent.click(screen.getByText('Envoyer'));
+    //   expect(handleSubmit).toHaveBeenCalled();
+    //   expect(screen.getByText('Mes notes de frais')).toBeTruthy();
+    //   expect(updateMock).toHaveBeenCalled();
+    //   let receveidUpdate = await updateMock.mock.results[0].value;
+    //   const expectedUpdateValue = await mockStore.bills().update();
+    //   expect(receveidUpdate).toStrictEqual(expectedUpdateValue);
+    // })
 
+    test('Function handleSubmit should be called', () => {
       const submitButton = screen.getByTestId('form-new-bill')
-      const handleSubmit = jest.fn(newBills.handleSubmit)
+      const handleSubmit = jest.fn((e) => newBills.handleSubmit(e))
       if (submitButton) {
-        submitButton.addEventListener('click', handleSubmit)
+        submitButton.addEventListener('submit', handleSubmit)
         userEvent.click(submitButton)
         expect(handleSubmit).toHaveBeenCalled()  
       }
