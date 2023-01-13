@@ -23,11 +23,11 @@ export default class {
   handleClickIconEye = (icon) => {
     const billUrl = icon.getAttribute("data-bill-url")
     const imageWidth = $('#modaleFile').width()
-    // if ($('#modaleFile').width() !== 0) {
-    //   const imgWidth = Math.floor(imageWidth * 0.5)
-    //   $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
-    //   $('#modaleFile').modal('show')
-    // }
+    if ($('#modaleFile').width() == 0) {
+      // console.log("!!! $('#modaleFile').width() == 0")
+      return imageWidth == 100
+    }
+    // console.log(imageWidth)
     const imgWidth = Math.floor(imageWidth * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
     $('#modaleFile').modal('show')
