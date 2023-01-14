@@ -20,10 +20,14 @@ describe("Given I am connected as an employee on the Bills page", () => {
 
   beforeEach(() => {
     // mocking local storage
+    jest.spyOn(mockStore, "bills")
     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
     window.localStorage.setItem('user', JSON.stringify({
-      type: 'Employee'
-    }))
+      type: 'Employee',
+      email: "employee@test.tld",
+      password: "employee",
+      status: "connected",
+   }))
 
     // setting div in body and running router before test
     const root = document.createElement("div")
@@ -147,20 +151,18 @@ describe("Given I am connected as an employee on the Bills page", () => {
     })
   })
   
-  describe('When an error occurs on API', () => {
-    beforeEach(() => {
-      jest.spyOn(mockStore, "bills")
-      Object.defineProperty(
-          window,
-          'localStorage',
-          { value: localStorageMock }
-      )
-      window.localStorage.setItem('user', JSON.stringify({
-        type: 'Employee',
-        email: "a@a"
-      }))
-    })
-    
+  // tests d'intégration GET
+
+  describe("When I navigate to BillsUI", () => {
+    test("fetches bills from mock API GET", async () => {
+      window.onNavigate(ROUTES_PATH.Bills)
+      await new Promise(process.nextTick);
+      const contentBody  = await screen.getByTestId("tbody")
+      expect(contentBody).not.toBe('')
+     })
+  })
+
+  describe("When an error occurs on API", () => {
     test("fetches bills from an API and fails with 404 message error", async () => {
       mockStore.bills.mockImplementationOnce(() => {
         return {

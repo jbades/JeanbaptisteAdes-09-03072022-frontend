@@ -52,7 +52,6 @@ export default () => {
     } else if (pathname === ROUTES_PATH['NewBill']) {
       rootDiv.innerHTML = ROUTES({ pathname, loading: true })
       new NewBill({ document, onNavigate, store, localStorage })
-      console.log("!!!document:", document, "!!!onNavigate:", onNavigate, "!!!store:", store, "!!!localStorage:", localStorage)
       const divIcon1 = document.getElementById('layout-icon1')
       const divIcon2 = document.getElementById('layout-icon2')
       divIcon1.classList.remove('active-icon')

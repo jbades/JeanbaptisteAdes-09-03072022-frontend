@@ -24,10 +24,8 @@ export default class {
     const billUrl = icon.getAttribute("data-bill-url")
     const imageWidth = $('#modaleFile').width()
     if ($('#modaleFile').width() == 0) {
-      // console.log("!!! $('#modaleFile').width() == 0")
       return imageWidth == 100
     }
-    // console.log(imageWidth)
     const imgWidth = Math.floor(imageWidth * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
     $('#modaleFile').modal('show')
@@ -39,10 +37,8 @@ export default class {
       .bills() // Creates Bills API
       .list() // Calls bills data from Node server
       .then(snapshot => {
-        // console.log(snapshot.length)
         const bills = snapshot
           .map(doc => {
-            // console.log(doc)
             try {
               return {
                 ...doc,
@@ -52,7 +48,7 @@ export default class {
             } catch(e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
-              console.log(e,'for',doc)
+              // console.log(e,'for',doc)
               return {
                 ...doc,
                 date: doc.date,
@@ -60,7 +56,6 @@ export default class {
               }
             }
           })
-          // console.log(bills)
         return bills
       })
     }

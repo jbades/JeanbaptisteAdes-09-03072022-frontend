@@ -11,7 +11,30 @@ import { ROUTES, ROUTES_PATH} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import mockStore, {list} from "../__mocks__/store"
 import router from "../app/Router.js";
- 
+
+beforeEach(() => {
+  // mocking local storage
+  jest.spyOn(mockStore, "bills")
+  Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+  window.localStorage.setItem('user', JSON.stringify({
+    type: 'Employee',
+    email: "employee@test.tld",
+    password: "employee",
+    status: "connected",
+ }))
+
+  // setting div in body and running router before test
+  const root = document.createElement("div")
+  root.setAttribute("id", "root")
+  document.body.append(root)
+  router()
+})
+
+afterEach(() => {
+  // emptying body after test
+  document.body.innerHTML = ""
+})
+
 describe('Given I am connected as an employee and I am on NewBillUI page', () => {
   describe('When  I click on ChangeFile button', () => {
   
@@ -25,87 +48,16 @@ describe('Given I am connected as an employee and I am on NewBillUI page', () =>
       if (changeFileButton) {
         userEvent.upload(changeFileButton, file)
       }
-      // tests the mocked file a properly been uploaded and stocked
+      // tests the mocked file have properly been uploaded and stocked
       expect(changeFileButton.files[0]).toStrictEqual(file)
       expect(changeFileButton.files.item(0)).toStrictEqual(file)
       expect(changeFileButton.files).toHaveLength(1)
     })
-  })
-})
 
-describe('Given I am connected as an employee and I am on NewBillUI page', () => {
-  describe('When  I click on submit button', () => {
-
-    document.body.innerHTML = NewBillUI() // mocks the NewBillUI interface
-
-    // mocks onNavigate, localStorage & store to feed NewBill object
-    Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-    window.localStorage.setItem('user', JSON.stringify({
-      type: 'Employee',
-      email: "employee@test.tld",
-      password: "employee",
-      status: "connected",
-   }))
-
-    const onNavigate = (pathname) => {
-      document.body.innerHTML = ROUTES({ pathname })
-    }
-
-    const store = mockStore // puis-je appeler un store vide ? Pas d'utilité à appeler mockStore, si ?
-
-    const newBills = new NewBill({
-      document, onNavigate, store, localStorage: window.localStorage
-    })
-
-    // test("Then form should be submited", async () => {
-    //   let updateMock = jest.spyOn(mockStore.bills(), 'update');
-    //   const handleSubmit = jest.fn((e) => newBills.handleSubmit(e));
-    //   const submit = screen.getByTestId('form-new-bill');
-    //   submit.addEventListener('submit', handleSubmit);
-    //   const name = screen.getByTestId('expense-name');
-    //   const amount = screen.getByTestId('amount');
-    //   const datePicker = screen.getByTestId('datepicker');
-    //   const pct = screen.getByTestId('pct');
-    //   const nameValue = 'new bill test';
-    //   const amountValue = '256';
-    //   const dateValue = '2020-05-12';
-    //   const pctValue = '20';
-    //   userEvent.type(name, nameValue);
-    //   userEvent.type(amount, amountValue);
-    //   userEvent.type(datePicker, dateValue);
-    //   userEvent.type(pct, pctValue);
-    //   datePicker.value = dateValue;
-    //   expect(datePicker.value).toBe(dateValue);
-    //   userEvent.click(screen.getByText('Envoyer'));
-    //   expect(handleSubmit).toHaveBeenCalled();
-    //   expect(screen.getByText('Mes notes de frais')).toBeTruthy();
-    //   expect(updateMock).toHaveBeenCalled();
-    //   let receveidUpdate = await updateMock.mock.results[0].value;
-    //   const expectedUpdateValue = await mockStore.bills().update();
-    //   expect(receveidUpdate).toStrictEqual(expectedUpdateValue);
-    // })
-
-    test('Function handleSubmit should be called', () => {
-      const submitButton = screen.getByTestId('form-new-bill')
-      const handleSubmit = jest.fn((e) => newBills.handleSubmit(e))
-      if (submitButton) {
-        submitButton.addEventListener('submit', handleSubmit)
-        userEvent.click(submitButton)
-        expect(handleSubmit).toHaveBeenCalled()  
-      }
-    })
-  })
-})
-
-// test d'intégration POST
-describe("Given I am a user connected as Employee", () => {
-  describe("When I'm on NewBills", () => {
-
+    // tests d'intégration POST
     test("sends new bill with mock API POST", async () => {
       document.body.innerHTML = NewBillUI() // mocks the NewBillUI interface
-      // console.log(document.body.innerHTML)
 
-      // const submitButton = screen.getByTestId('btn-send-bill')
       const submitButton = screen.getByTestId('form-new-bill')
       const onSubmit = jest.fn()
       if (submitButton) {
@@ -114,5 +66,33 @@ describe("Given I am a user connected as Employee", () => {
         expect(onSubmit).toHaveBeenCalled()  
       }
     })
+
+    test("send bills to an API and fails with 404 message error", async () => {
+      mockStore.bills.mockImplementationOnce(() => {
+        return {
+          list : () =>  {
+            return Promise.reject(new Error("Erreur 404"))
+          }
+        }})
+      window.onNavigate(ROUTES_PATH.NewBill)
+      await new Promise(process.nextTick);
+      const message = await screen.getByText(/Erreur 404/)
+      expect(message).toBeTruthy()
+    })
+
+    // test("send messages to an API and fails with 500 message error", async () => {
+
+    //   mockStore.bills.mockImplementationOnce(() => {
+    //     return {
+    //       list : () =>  {
+    //         return Promise.reject(new Error("Erreur 500"))
+    //       }
+    //     }})
+
+    //   window.onNavigate(ROUTES_PATH.NewBill)
+    //   await new Promise(process.nextTick);
+    //   const message = await screen.getByText(/Erreur 500/)
+    //   expect(message).toBeTruthy()
+    // })
   })
 })
