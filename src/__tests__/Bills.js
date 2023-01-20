@@ -182,7 +182,6 @@ describe("Given I am connected as an employee", () => {
     })
 
     test("fetches messages from an API and fails with 500 message error", async () => {
-
       mockStore.bills.mockImplementationOnce(() => {
         return {
           list : () =>  {

@@ -19,13 +19,15 @@ const row = (bill) => {
 }
 
 const rows = (data) => {
-  // console.log(data)
   // sorting bills ascendently
-  // const antiChrono = (a, b) => ((Date.parse(new Date(a.date)) < Date.parse(new Date(b.date)) ? 1 : -1));
-  const antiChrono = (a, b) => ((new Date(a.date).getTime() < new Date(b.date).getTime() ? 1 : -1));
-  const sortedData = [...(data)].sort(antiChrono);
-  // console.log(sortedData)
-  return (data && data.length) ? sortedData.map(bill => row(bill)).join("") : ""
+  if(data) {
+    data.sort((a, b) => {
+      const dateA = new Date(a.date)
+      const dateB = new Date(b.date)
+      return dateB.getTime() - dateA.getTime()
+    })
+  }
+  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => {
