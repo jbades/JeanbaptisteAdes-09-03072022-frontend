@@ -38,10 +38,10 @@ describe("Given I am connected as an employee", () => {
     document.body.innerHTML = ""
   })
     
-  describe("Given and I am on NewBillUI page", () => {
+  describe("Given I am on NewBillUI page", () => {
 
     describe ("When  I click on ChangeFile button", () => {
-      test('The uploaded mocked file should be the only one uploaded', () => {
+      test('Then the uploaded mocked file should be the only one uploaded', () => {
         document.body.innerHTML = NewBillUI() // mocks the NewBillUI interface
         window.alert = () => {};  // provide an empty implementation for window.alert
   
@@ -55,7 +55,20 @@ describe("Given I am connected as an employee", () => {
         expect(changeFileButton.files.item(0)).toStrictEqual(file)
         expect(changeFileButton.files).toHaveLength(1)
       })
-    })
+
+      test("Then I should be able to change file", () => {
+        document.body.innerHTML = NewBillUI() // mocks the NewBillUI interface
+        const newBill = new NewBill({document : document, onNavigate: onNavigate, store: mockStore, localStorage: window.localStorage})
+
+        const handleChangeFile = jest.fn((e)=> newBill.handleChangeFile(e));
+        const changeFile = screen.getByTestId('file');
+        changeFile.addEventListener('change', handleChangeFile);
+        const file = new File(['test'], 'https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg', {type: 'image/jpg'})
+        userEvent.upload(changeFile, file);
+        expect(handleChangeFile).toHaveBeenCalled();
+        expect(changeFile.files[0].name).toBe('https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg');
+      })
+     })
   
     // tests d'intégration POST
     test("mocking API POST to send a new bill", async () => {
