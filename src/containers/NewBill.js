@@ -22,7 +22,6 @@ export default class NewBill {
     // const fileNode = this.document.querySelector(`input[data-testid="file"]`);
     // fileNode.setAttribute("accept", ".jpeg, .jpg, .png");
     // const file = fileNode.files[0];
-    // console.log(file);
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
     const formData = new FormData()
@@ -59,7 +58,6 @@ export default class NewBill {
 
   handleSubmit = e => {
     e.preventDefault()
-    // console.log('!!! e: ', e, 'e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,

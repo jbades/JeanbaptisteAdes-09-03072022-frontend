@@ -10,7 +10,7 @@ import userEvent from '@testing-library/user-event'
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store"
 import router from "../app/Router.js";
-import { ROUTES, ROUTES_PATH } from "../constants/routes.js"
+import { ROUTES_PATH } from "../constants/routes.js"
 
 jest.mock('../app/Store', () => require('../__mocks__/store.js').default);
 
@@ -63,10 +63,10 @@ describe("Given I am connected as an employee", () => {
         const handleChangeFile = jest.fn((e)=> newBill.handleChangeFile(e));
         const changeFile = screen.getByTestId('file');
         changeFile.addEventListener('change', handleChangeFile);
-        const file = new File(['test'], 'https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg', {type: 'image/jpg'})
+        const file = new File(['test'], 'test.png', {type: 'image/jpg'})
         userEvent.upload(changeFile, file);
         expect(handleChangeFile).toHaveBeenCalled();
-        expect(changeFile.files[0].name).toBe('https://firebasestorage.googleapis.com/v0/b/billable-677b6.a…f-1.jpg');
+        expect(changeFile.files[0].name).toBe('test.png');
       })
      })
   
